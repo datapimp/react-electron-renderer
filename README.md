@@ -1,23 +1,31 @@
-## An Application Singleton
-  - Manages global state
-  - Uses a redux store
+# React Application Components for Electron (SuperAlpha)
 
-## A Better BrowserWindow Experience
-  - Decorates windows with `electron-positioner`
-  - Allows for specifying window sizes as percentages
-  - Presets for certain types of windows
+Compose multi-window electron applications which render in electron's main context,
+and eventually pass off rendering and props to `react-dom` in the browser context.
 
-## Better IPC through streams and promises
-  - Communicate between the renderer and main promises with `ask` and `tell`
-  - Easily pipe streams between the renderer and main processes
 
-## Write your electron windows as React components
-  - React components render in the main process
-  - Window positioning / sizing etc based on the react component state
-  - Electron process React component children
-
-# React Application Components for Electron
 
 ```js
+import React, { Component, PropTypes as types } from 'react'
+import { render, Workspace, Panel } from 'react-electron-renderer'
 
+import NativeMenu from './native/menus'
+
+import { app } from 'electron'
+
+import WebApp from 'my-react-webapp'
+
+class ElectronApplication extends Component {
+  render () {
+    <Workspace>
+      <NativeMenu title='My Menu' />
+
+      <Panel>
+        <WebApp {...propsForWebapp } />
+      </Panel>
+    </Workspace>
+  }
+}
+
+render(<ElectronApplication />, app)
 ```
